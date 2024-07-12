@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import './App.css';
 import styles from './App.module.css';
 
@@ -65,9 +65,25 @@ function Counter() {
     setColor('blue');
   };
 
+  const factorial = (n) => {
+    if (n == 0) {
+      return 0;
+    } else if (n == 1) {
+      return 1;
+    } else {
+      return factorial(n - 1) * n
+    }
+  }
+  const memo = useMemo(() => { // 복잡한 연산을 다시 실행하지 않으려고 사용
+    console.log("factorial 연산");
+    let result = factorial(count);
+    return result;
+  }, [count]);
+
   return (
     <div>
       <h1>{count}</h1>
+      <h1>팩토리얼 연산 결과: {memo}</h1>
       <button onClick={onClick}>Click</button>
       <button onClick={onClick2}>Click</button>
       <hr />
