@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import './App.css';
 import styles from './App.module.css';
 
@@ -15,6 +15,8 @@ const Toc = (props) => {
 };
 
 function Counter() {
+  const value = useRef(0);
+
   // state 값을 변경시키면 화면은 다시 렌더링된다!
   const [refresh, setRefresh] = useState(true);
   console.log("Counter 다시 생성"); // 어느 상황이든지 항상 출력됨
@@ -53,6 +55,10 @@ function Counter() {
   }, []); // = UnMount
 
   const onClick = () => {
+    value.current += 1;
+    console.log(value);
+    console.log(value.current);
+
     // count = count + 1;
 
     // 이전의 값을 콜백함수에 매개변수로 표현
@@ -80,12 +86,19 @@ function Counter() {
     return result;
   }, [count]);
 
+  const h1Ref = useRef();
+  const onClick3 = () => {
+    const value = h1Ref.current.innerText;
+    alert(value);
+  };
+
   return (
     <div>
       <h1>{count}</h1>
-      <h1>팩토리얼 연산 결과: {memo}</h1>
+      <h1 ref={h1Ref}>팩토리얼 연산 결과: {memo}</h1>
       <button onClick={onClick}>Click</button>
       <button onClick={onClick2}>Click</button>
+      <button onClick={onClick3}>Click</button>
       <hr />
       <Toc list={list} />
     </div>
